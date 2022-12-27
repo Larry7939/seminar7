@@ -28,25 +28,25 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 //        }
 
     //pickVisualMedia로 이미지 가져오기1
-//    private val pickVmLauncher =
-//        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
-//            binding.image.load(it)
-//        }
-    //pickMultipleVisualMedia로 이미지 가져오기1
-    private val pickMultiVmLauncher =
-        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(3)) {
-            binding.image1.load(it[0])
-            binding.image2.load(it[1])
-            binding.image3.load(it[2])
+    private val pickVmLauncher =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
+            binding.image2.load(it)
         }
+    //pickMultipleVisualMedia로 이미지 가져오기1
+//    private val pickMultiVmLauncher =
+//        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(3)) {
+//            binding.image1.load(it[0])
+//            binding.image2.load(it[1])
+//            binding.image3.load(it[2])
+//        }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         //registerForActivityResult로 이미지뿐만 아니라 권한도 가져올 수 있다!
         val permissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
             }
-        permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        permissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.WRITE_CALENDAR))
 
         //GetContent로 이미지 가져오기2
 //        binding.textView.setOnClickListener {
@@ -54,14 +54,14 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 //        }
 
 //        //pickVisualMedia로 이미지 가져오기2
-//        binding.textView.setOnClickListener {
-//            pickVmLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-//        }
-
-//        //pickMultipleVisualMedia로 이미지 가져오기2
         binding.textView.setOnClickListener {
-            pickMultiVmLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
+            pickVmLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
+
+//        //pickMultipleVisualMedia로 이미지 가져오기2 - 이미지 길게 눌러서 다중 선택
+//        binding.textView.setOnClickListener {
+//            pickMultiVmLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
+//        }
     }
 
 }
